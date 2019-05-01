@@ -1,12 +1,16 @@
-#ifndef SUPEVILLAIN_H
-#define SUPEVILLAIN_H
+#ifndef SUPERVILLAIN_H
+#define SUPERVILLAIN_H
 
 #include <QObject>
+#include "human.h"
 
-class SupeVillain
+class SuperVillain : public virtual Human
 {
 public:
-    SupeVillain();
+    SuperVillain(unsigned int _HP, unsigned int _MP, Position _pos);
+
+    void attack();
+    void super_attack(); // wewnątrz protected?
 };
 
-#endif // SUPEVILLAIN_H
+#endif // SUPERVILLAIN_H

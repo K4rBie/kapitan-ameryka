@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsScene>
+
+#include "world.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +20,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    std::tuple<unsigned int, unsigned int> fightscene_size;
+    World world;
 };
 
 #endif // MAINWINDOW_H
