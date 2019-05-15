@@ -50,7 +50,7 @@ protected:
     virtual std::weak_ptr<Human> find_closest_enemy(std::vector<std::weak_ptr<Human>> everyone) = 0; // czy musi być wirtualny?
     void move(QPointF target_pos);
     QPointF loc_pos;
-    unsigned int team;
+    unsigned int team; // te wszystkie rzeczy można ustawiać w konstruktorze
     unsigned int HP;
     unsigned int MP;
     unsigned int DMG;

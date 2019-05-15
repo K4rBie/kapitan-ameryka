@@ -5,10 +5,8 @@ SuperHero::SuperHero(unsigned int _HP, unsigned int _MP, QPointF _loc_pos) : Hum
 {
     setRect(_loc_pos.rx(), _loc_pos.ry(), 2*radius, 2*radius); //lepiej tu czy w humanie? -- tutaj, bo rozmiar
     setBrush(Qt::cyan);
-    //body.setPen(Qt::darkCyan, 3); //V1
     QPen pen(Qt::darkCyan, 3);
     setPen(pen);
-    //_loc_pos = this->boundingRect().topLeft(); // co z tym? potrzebne? loc_pos tak, to nie
     qDebug( "loc_pos: " + QString::number(_loc_pos.x()).toLatin1());
     team = 0;
     speed = 2;
