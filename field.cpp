@@ -1,7 +1,7 @@
 #include "field.h"
 
-Field::Field(std::tuple<unsigned int, unsigned int> size)
+Field::Field(std::array<unsigned int, 2> size)
 {
-    this->setRect(0, 0, std::get<0>(size), std::get<1>(size));
+    this->setRect(0, 0, size[0], size[0]);
     this->setBrush(Qt::green);
 }

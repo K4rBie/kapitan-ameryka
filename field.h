@@ -8,7 +8,7 @@
 class Field : public QObject, public QGraphicsRectItem
 { Q_OBJECT
 public:
-    Field(std::tuple<unsigned int, unsigned int> size);
+    Field(std::array<unsigned int, 2>  size);
 };
 
 #endif // FIELD_H

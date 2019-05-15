@@ -20,7 +20,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    std::tuple<unsigned int, unsigned int> fightscene_size;
+    std::array<unsigned int, 2> fightscene_size;
     World world;
 };
 
