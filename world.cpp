@@ -1,31 +1,22 @@
 #include "world.h"
 
 World::World(std::array<unsigned int, 2> fightscene_size) :
-    fieldsize(fightscene_size), // to właściwie dość śmiesznie działa, bo chyba nie muszę wtedy w każdej klasie robić specjalnej zmiennej rozmiaru, jeśli tylko używam jej w konstruktorze
-    field(fightscene_size)
+    fieldsize(fightscene_size) // to właściwie dość śmiesznie działa, bo chyba nie muszę wtedy w każdej klasie robić specjalnej zmiennej rozmiaru, jeśli tylko używam jej w konstruktorze
+    //field(fightscene_size)
 {
     double distance = fightscene_size[0] * 9 / 4 / 10;
     double bottom = fightscene_size[1] * 3 / 4;
 
     for(int i=0; i<4; i++) {
-        fighters.push_back(std::make_shared<SuperHero>(200, 100, QPointF{30 + i*distance, 50}));
-        //qDebug( "X coordinate: " + QString::number( fighters.at(i).get()->get_pos().X ).toLatin1());
+        fighters.push_back(make_shared<SuperHero>(200, 100, PointF{60 + i*distance * 0.7, 10}));
     }
 
     for(int i=0; i<4; i++) {
-        fighters.push_back(std::make_shared<SuperVillain>(200, 100, QPointF{30 + i*distance, bottom}));
-        //qDebug( "X coordinate: " + QString::number( fighters.at(i).get()->get_pos().X ).toLatin1());
-    }    
-
-    connect(&world_timer, SIGNAL(timeout()), this, SLOT(run_simulation()) );
-    world_timer.start(17);
+        fighters.push_back(make_shared<SuperVillain>(200, 100, PointF{20 + i*distance * 1.3, bottom}));
+    }
 
 }
 
-QTimer &World::get_world_timer()
-{
-    return world_timer;
-}
 
 Field &World::get_field()
 {
@@ -37,9 +28,24 @@ vector<shared_ptr<Human>> World::get_fighters()
     return fighters;
 }
 
+vector<shared_ptr<LogicObject> > World::get_all_objects() /* nie wiem, czy nie wystarczyłby unique_ptr*/
+{
+    vector<shared_ptr<LogicObject> > all_objects;
+    //shared_ptr<Field> field_ptr = make_shared<Field>(field);
+
+    all_objects.push_back(make_shared<Field>(field));
+
+    for (auto fighter : fighters) {
+        all_objects.push_back(fighter);
+    }
+    return all_objects;
+}
+
 void World::run_simulation()
 {
-    fighters.at(2)->run_simulation(convert_ptr_vec(fighters));
+    for (auto fighter : fighters) {
+        fighter->run_simulation(convert_ptr_vec(fighters));
+    }
 }
 
 vector<weak_ptr<Human>> World::convert_ptr_vec(vector<shared_ptr<Human>> shared_ptr_vec)

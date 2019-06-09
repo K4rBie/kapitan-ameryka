@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>488</height>
+    <width>708</width>
+    <height>584</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -67,8 +67,8 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>581</width>
-      <height>431</height>
+      <width>691</width>
+      <height>521</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1">
@@ -81,9 +81,9 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,3">
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="resetButton">
          <property name="text">
-          <string>PushButton</string>
+          <string>Resetuj</string>
          </property>
         </widget>
        </item>
@@ -95,9 +95,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="quitButton">
          <property name="text">
-          <string>PushButton</string>
+          <string>Zakończ</string>
          </property>
         </widget>
        </item>
@@ -111,8 +111,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
-     <height>30</height>
+     <width>708</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

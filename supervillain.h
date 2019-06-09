@@ -3,16 +3,18 @@
 
 #include "human.h"
 
-class SuperVillain : public virtual Human
-{   Q_OBJECT
+class SuperVillain : public Human
+{
 public:
-    SuperVillain(unsigned int _HP, unsigned int _MP, QPointF loc_pos);
+    SuperVillain(unsigned int HP_, unsigned int MP_, PointF pos_);
     void run_simulation(std::vector<std::weak_ptr<Human>> everyone);
+//    array<unsigned int, 2> get_size();
+//    unsigned int get_radius();
 
 protected:
-    void attack();
+    void attack(TargetedHuman target);
     void super_attack(); // wewnątrz protected?
-    std::weak_ptr<Human> find_closest_enemy(std::vector<std::weak_ptr<Human>> everyone);
+    void move(PointF target_pos, double dist_sqr);
 
 };
 

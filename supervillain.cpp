@@ -1,26 +1,58 @@
 #include "supervillain.h"
 
-SuperVillain::SuperVillain(unsigned int _HP, unsigned int _MP, QPointF loc_pos) : Human(_HP, _MP, loc_pos)
+SuperVillain::SuperVillain(unsigned int HP_, unsigned int MP_, PointF pos_) : Human(HP_, MP_, pos_)
 {
-    setRect(loc_pos.rx(), loc_pos.ry(), 2*radius, 2*radius); //mogę mieć wyjebane na pozycję środka koła
-    setBrush(Qt::red);
-    //body.setPen(Qt::darkRed, 3); //V1
-    QPen pen(Qt::darkRed, 3);
-    setPen(pen);
+    /* To wszystko powinno trafić do graficznej części */
+    //setRect(pos_.x, pos_.y, 2*radius, 2*radius);
+    //setBrush(Qt::blue);
+    //QPen pen(Qt::darkBlue, 3);
+    //setPen(pen);
 
     team = 1;
-    speed = 10;
-    DMG = 10;
+    speed = 6;
+    DMG = 20;
+    attack_cooldown = 20;
 }
 
 void SuperVillain::run_simulation(std::vector<std::weak_ptr<Human> > everyone)
 {
-    this->find_closest_enemy(everyone);
+    if (!this->state.alive) return;
+
+    if (state.damaged_lately) {
+        if (damaged_counter != damaged_cooldown) {
+            damaged_counter++;
+        } else {
+            state.damaged_lately = false;
+            damaged_counter = 0;
+        }
+    }
+
+    TargetedHuman closest_target = this->find_closest_enemy(everyone);
+    if (!closest_target.pointer.has_value()) {
+        return;
+    }
+
+    PointF enemy_pos = closest_target.pointer.value().lock()->get_pos();
+
+    this->state.in_move = false; // na razie niepotrzebne, ale jak move będzie w warunku to się przyda
+    this->move(enemy_pos, closest_target.squared_distance);
+
+
+
+    attack(closest_target);
 }
 
-void SuperVillain::attack()
-{
 
+void SuperVillain::attack(TargetedHuman target)
+{
+    if (state.fleeing) return;
+
+    if (attack_counter != attack_cooldown){
+        attack_counter++;
+    } else if (target.squared_distance <= 1600){
+        target.pointer.value().lock()->receive_dmg(DMG);
+        attack_counter = 0;
+    }
 }
 
 void SuperVillain::super_attack()
@@ -28,43 +60,21 @@ void SuperVillain::super_attack()
 
 }
 
-std::weak_ptr<Human> SuperVillain::find_closest_enemy(std::vector<std::weak_ptr<Human> > everyone)
-{
-    std::optional<int> smallest_sqr_dist;
-    std::shared_ptr<Human> closest;
+void SuperVillain::move(PointF target_pos, double dist_sqr)
+{    
+    if (pos.x < radius || pos.x > 500 - radius || pos.y < radius || pos.y > 500 - radius) return;
+    state.in_move = true;
 
-    double dist_sqr;
+    PointF motion_vector = target_pos - this->pos;
+    double vec_length = sqrt(dist_sqr);
 
-    for (auto human_ptr : everyone) {
-        std::shared_ptr<Human> human = human_ptr.lock(); // może jakiś test czy jeszcze można?
-        if (this->team == human->get_team()) continue;
-
-        QPointF test = human.get()->pos();
-        dist_sqr = QPointF::dotProduct(this->pos(), human.get()->pos());
-        //qDebug( "square distance: " + QString::number(dist_sqr).toLatin1());
-        qDebug( "this pos: " + QString::number(test.x()).toLatin1());
-
-
-        if (smallest_sqr_dist.has_value()) {
-            if (dist_sqr < smallest_sqr_dist) {
-                smallest_sqr_dist = dist_sqr; // liczysz ten dystans w dwóch miejscach -- warto by jakoś to powiązać
-                closest = human;
-            }
-        } else {
-            smallest_sqr_dist = dist_sqr;
-            closest = human; // jeśli odwala to tutaj
+    if (this->HP > 100) {
+        if (vec_length <= (2 * this->radius)) {
+            return;
         }
-        // powinien zwracać pozycję albo obiekt.
-        // pozycję, bo to mało danych a tylko tyle lokalnie potrzeba
-        // obiekt, bo ostatecznie, jeśli będzie atakował, to i tak potrzebuje się do niego odnieść.
-        // weak pointer, bo 2 humany walczące ze sobą zawsze będą miały pointery siebie nawzajem
-
-        // zapisz pointer najbliższego przeciwnika?
-        // pointery są małe, nie ma co się zastanawiać, można kopiować co turę
+        this->LogicObject::pos += motion_vector / ( double(vec_length) / double(speed) * 10);
+    } else {
+        state.fleeing = true;
+        this->LogicObject::pos -= motion_vector / ( double(vec_length) / double(speed) * 8);
     }
-    qDebug( "Smallest square distance: " + QString::number(smallest_sqr_dist.value()).toLatin1());
-
-
-
-    return closest; // albo tutaj: dlaczego to działa?
 }

@@ -1,14 +1,19 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#include <QObject>
-#include <QGraphicsRectItem>
-#include <QPainter>
+#include <logicobject.h>
 
-class Field : public QObject, public QGraphicsRectItem
-{ Q_OBJECT
+using namespace std;
+
+class Field : public LogicObject
+{
 public:
-    Field(std::array<unsigned int, 2>  size);
+    Field();
+    array<unsigned int, 2> get_size();
+    unsigned int get_radius();
+
+private:
+    array<unsigned int, 2>  size = {500, 500};
 };
 
 #endif // FIELD_H

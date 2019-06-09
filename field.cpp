@@ -1,7 +1,18 @@
 #include "field.h"
 
-Field::Field(std::array<unsigned int, 2> size)
+// LOGIC-READY
+Field::Field()
 {
-    this->setRect(0, 0, size[0], size[0]);
-    this->setBrush(Qt::green);
+}
+
+array<unsigned int, 2> Field::get_size()
+{
+    return size;
+}
+
+unsigned int Field::get_radius()
+{
+    cout << "ktoś odniósł się do radiusa w kwadracie, bo może, bo chujowo napisany kod";
+    cerr << "ktoś odniósł się do radiusa w kwadracie, bo może, bo chujowo napisany kod";
+    return size[0];
 }

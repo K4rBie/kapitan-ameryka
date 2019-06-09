@@ -3,18 +3,21 @@
 
 #include "human.h"
 
-class SuperHero : public virtual Human
-{   Q_OBJECT
+class SuperHero : public Human
+{
 public:
-    SuperHero(unsigned int _HP, unsigned int _MP, QPointF loc_pos); // ostatecznie nie może być unsigned, bo jak dostanie
+    SuperHero(unsigned int HP_, unsigned int MP_, PointF pos_); // ostatecznie nie może być unsigned, bo jak dostanie
     // dmg albo zużyje manę za więcej niż ma, to się zrobi overflow
     // można też testować czy przekroczy, a nie czy przekroczył i wtedy wszystko jest w porzadku
     void run_simulation(std::vector<std::weak_ptr<Human>> everyone);
+//    array<unsigned int, 2> get_size();
+//    unsigned int get_radius();
 
 protected:
-    void attack();
+    void attack(TargetedHuman target);
     void super_attack();
-    std::weak_ptr<Human> find_closest_enemy(std::vector<std::weak_ptr<Human>> everyone);
+    void move(PointF target_pos, double dist_sqr);
+    //std::weak_ptr<Human> find_closest_enemy(std::vector<std::weak_ptr<Human>> everyone);
 };
 
 #endif // SUPERHERO_H

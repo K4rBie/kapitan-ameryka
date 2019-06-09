@@ -1,9 +1,9 @@
 #ifndef WALL_H
 #define WALL_H
 
-#include <QObject>
+#include "logicobject.h"
 
-class Wall
+class Wall: public LogicObject
 {
 public:
     Wall();

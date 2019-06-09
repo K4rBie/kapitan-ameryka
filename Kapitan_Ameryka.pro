@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
+    graphicobject.cpp \
+    logicobject.cpp \
         main.cpp \
         mainwindow.cpp \
     world.cpp \
@@ -35,6 +37,8 @@ SOURCES += \
     supervillain.cpp
 
 HEADERS += \
+    graphicobject.h \
+    logicobject.h \
         mainwindow.h \
     world.h \
     human.h \
