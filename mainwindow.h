@@ -43,6 +43,9 @@ private:
 
 public slots:
     void run_simulation();
+private slots:
+    void on_resetButton_clicked();
+    void on_quitButton_clicked();
 };
 
 #endif // MAINWINDOW_H

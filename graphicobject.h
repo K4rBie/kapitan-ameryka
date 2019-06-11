@@ -16,9 +16,12 @@ class GraphicObject : public QObject
 public:
     GraphicObject();
     vector<shared_ptr<LogicObject>> everything;
+    void reset_world();
+    ~GraphicObject();
 
 private:
-    World world;
+    World *world;
+
 
 public slots:
     void run_simulation();

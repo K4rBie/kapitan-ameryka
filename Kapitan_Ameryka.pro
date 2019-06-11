@@ -29,6 +29,7 @@ SOURCES += \
     logicobject.cpp \
         main.cpp \
         mainwindow.cpp \
+    sorcerer.cpp \
     world.cpp \
     human.cpp \
     field.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     graphicobject.h \
     logicobject.h \
         mainwindow.h \
+    sorcerer.h \
     world.h \
     human.h \
     field.h \

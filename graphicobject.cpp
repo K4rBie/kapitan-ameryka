@@ -1,12 +1,24 @@
 #include "graphicobject.h"
 
-GraphicObject::GraphicObject() : world({500, 500}) // to dalej można powiązać z oknem
+GraphicObject::GraphicObject()
 {
-    // to powinno jakoś zbierać wszystkie logiczne elementy w jedną kupę
-    everything = world.get_all_objects();
+    world = new World({500, 500});
+    everything = world->get_all_objects();
+}
+
+void GraphicObject::reset_world()
+{
+    delete world;
+    world = new World({500, 500});
+    everything = world->get_all_objects();
+}
+
+GraphicObject::~GraphicObject()
+{
+    delete world;
 }
 
 void GraphicObject::run_simulation()
 {
-    world.run_simulation();
+    world->run_simulation();
 }

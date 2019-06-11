@@ -7,11 +7,13 @@ World::World(std::array<unsigned int, 2> fightscene_size) :
     double distance = fightscene_size[0] * 9 / 4 / 10;
     double bottom = fightscene_size[1] * 3 / 4;
 
-    for(int i=0; i<4; i++) {
+    fighters.push_back(make_shared<Sorcerer>(200, 100, PointF{60, 10}, 0));
+    for(int i=1; i<4; i++) {
         fighters.push_back(make_shared<SuperHero>(200, 100, PointF{60 + i*distance * 0.7, 10}));
     }
 
-    for(int i=0; i<4; i++) {
+    fighters.push_back(make_shared<Sorcerer>(200, 100, PointF{20, bottom}, 1));
+    for(int i=1; i<4; i++) {
         fighters.push_back(make_shared<SuperVillain>(200, 100, PointF{20 + i*distance * 1.3, bottom}));
     }
 

@@ -113,3 +113,31 @@ void MainWindow::run_simulation()
         i++;
     }
 }
+
+void MainWindow::on_resetButton_clicked()
+{
+    graphic_world.reset_world();
+
+    for (unsigned long i = 1; i < graphic_world.everything.size(); i++ ){
+
+        auto log_fighter = graphic_world.everything.at(i).get();
+
+        auto* fighter = g_fighters.at(i-1);
+
+        if (static_cast<Human*>(log_fighter)->get_team() == 0) {
+            fighter->setPen(good_pen);
+            fighter->setBrush(good_brush);
+        } else {
+            fighter->setBrush(bad_brush);
+            fighter->setPen(bad_pen);
+        }
+
+    }
+
+
+}
+
+void MainWindow::on_quitButton_clicked()
+{
+    close();
+}

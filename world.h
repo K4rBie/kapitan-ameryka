@@ -7,6 +7,7 @@
 
 #include "superhero.h"
 #include "supervillain.h"
+#include "sorcerer.h"
 #include "field.h"
 
 
