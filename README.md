@@ -1,0 +1,1 @@
+Simple GUI game / simulation to learn and make use of object oriented programming.
